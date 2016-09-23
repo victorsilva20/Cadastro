@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import br.com.sisaca.exceptions.CampoNaoPreenchidoException;
 import br.com.sisaca.exceptions.PessoaNaoEncontradaException;
 import br.com.sisaca.model.Pessoa;
 
@@ -23,21 +22,23 @@ public class PessoaDAOImpl implements PessoaDAO {
 	}
 
 	@Override
-	public void addPessoa(Pessoa p) throws CampoNaoPreenchidoException {
+	public void addPessoa(Pessoa p)  {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(p);
 		logger.info("Pessoa saved succesfully, Pessoa Details= " + p);
-		throw new CampoNaoPreenchidoException(p);
+		
 
 	}
 
 	@Override
 	public void deletePessoa(Pessoa p) throws PessoaNaoEncontradaException {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Pessoa> personsList = (ArrayList<Pessoa>) session.createQuery("from Pessoa").list();
+		ArrayList<Pessoa> personsList = (ArrayList<Pessoa>) session.createQuery("from pessoa").list();
 		for (Pessoa pe : personsList) {
 			if (pe.getCpf().equals(p.getCpf())) {
+				session.delete(p);
 				logger.info("Pessoa successfully deleted" + p);
+				return;
 
 			}
 		}
@@ -48,7 +49,7 @@ public class PessoaDAOImpl implements PessoaDAO {
 	@Override
 	public Pessoa consultarPessoa(Pessoa p) throws PessoaNaoEncontradaException {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Pessoa> personsList = (ArrayList<Pessoa>) session.createQuery("from Pessoa").list();
+		ArrayList<Pessoa> personsList = (ArrayList<Pessoa>) session.createQuery("from pessoa").list();
 		for (Pessoa pe : personsList) {
 			if (pe.getCpf().equals(p.getCpf())) {
 				logger.info("Pessoa List::" + p);
@@ -62,7 +63,7 @@ public class PessoaDAOImpl implements PessoaDAO {
 	@Override
 	public ArrayList<Pessoa> listar() {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Pessoa> personsList = (ArrayList<Pessoa>) session.createQuery("from Pessoa").list();
+		ArrayList<Pessoa> personsList = (ArrayList<Pessoa>) session.createQuery("from pessoa").list();
 		for (Pessoa p : personsList) {
 			logger.info("Pessoa List::" + p);
 		}

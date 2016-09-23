@@ -25,7 +25,7 @@ public class AlunoDAOImpl implements AlunoDAO {
 	public void addAluno(Aluno a) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(a);
-		logger.info("Aluno saved succesfully, Person Details= " + a);
+		logger.info("Aluno saved succesfully, Aluno Details= " + a);
 	}
 
 	@Override
@@ -34,7 +34,9 @@ public class AlunoDAOImpl implements AlunoDAO {
 		ArrayList<Aluno> alunoList = (ArrayList<Aluno>) session.createQuery("from aluno").list();
 		for (Aluno al : alunoList) {
 			if (al.getMatricula() == a.getMatricula()) {
+				session.delete(a);
 				logger.info("Aluno successfully deleted" + a);
+				return;
 
 			}
 		}

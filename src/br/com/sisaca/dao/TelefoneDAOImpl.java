@@ -7,14 +7,11 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.sisaca.exceptions.CampoNaoPreenchidoException;
-import br.com.sisaca.exceptions.PessoaNaoEncontradaException;
-import br.com.sisaca.model.Pessoa;
+import br.com.sisaca.exceptions.TelefoneNaoEncontradoException;
 import br.com.sisaca.model.Telefone;
 
-public class TelefoneDAOImpl implements TelefoneDAO{
+public class TelefoneDAOImpl implements TelefoneDAO {
 
-	
 	private static final Logger logger = LoggerFactory.getLogger(PessoaDAOImpl.class);
 	private SessionFactory sessionFactory;
 
@@ -23,47 +20,47 @@ public class TelefoneDAOImpl implements TelefoneDAO{
 	}
 
 	@Override
-	public void addTelefone(Telefone fone) throws CampoNaoPreenchidoException {
+	public void addTelefone(Telefone fone) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(fone);
-		logger.info("Pessoa saved succesfully, Pessoa Details= " +fone);
-		throw new CampoNaoPreenchidoException(fone);
-		
+		logger.info("Telefone saved succesfully, Telefone Details= " + fone);
+
 	}
 
 	@Override
-	public void deleteTelefone(Telefone fone) throws TelefoneNaoEncontradaException {
+	public void deleteTelefone(Telefone fone) throws TelefoneNaoEncontradoException {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Telefone> telefoneList = (ArrayList<Telefone>) session.createQuery("from Telefone").list();
+		ArrayList<Telefone> telefoneList = (ArrayList<Telefone>) session.createQuery("from telefone").list();
 		for (Telefone tel : telefoneList) {
 			if (tel.getId() == fone.getId()) {
-				logger.info("Pessoa successfully deleted" + fone);
+				logger.info("Telefone successfully deleted" + fone);
+				return;
 
 			}
 		}
-		throw new TelefoneNaoEncontradaException(fone);
-		
+		throw new TelefoneNaoEncontradoException(fone);
+
 	}
 
 	@Override
-	public Telefone consultarTelefone(Telefone fone) throws TelefoneNaoEncontradaException {
+	public Telefone consultarTelefone(Telefone fone) throws TelefoneNaoEncontradoException {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Telefone> telefonesList = (ArrayList<Telefone>) session.createQuery("from Telefone").list();
-		for (Telefone tel: telefonesList ) {
+		ArrayList<Telefone> telefonesList = (ArrayList<Telefone>) session.createQuery("from telefone").list();
+		for (Telefone tel : telefonesList) {
 			if (tel.getId() == fone.getId()) {
-				logger.info("Pessoa List::" + fone);
+				logger.info("Telefone List::" + fone);
 				return fone;
 			}
 		}
-		throw new TelefoneNaoEncontradaException(fone);
+		throw new TelefoneNaoEncontradoException(fone);
 	}
 
 	@Override
 	public ArrayList<Telefone> listar() {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Telefone> telefonesList = (ArrayList<Telefone>) session.createQuery("from Telefone").list();
-		for (Telefone tel: telefonesList ) {
-			logger.info("Pessoa List::" + tel);
+		ArrayList<Telefone> telefonesList = (ArrayList<Telefone>) session.createQuery("from telefone").list();
+		for (Telefone tel : telefonesList) {
+			logger.info("Telefone List::" + tel);
 		}
 
 		return telefonesList;

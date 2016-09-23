@@ -22,21 +22,22 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 	}
 
 	@Override
-	public void addProfessor(Professor prof) throws CampoNaoPreenchidoException{
+	public void addProfessor(Professor prof) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(prof);
-		logger.info("Professor saved succesfully, Pessoa Details= " + prof);
-		throw new  CampoNaoPreenchidoException(prof);
+		logger.info("Professor saved succesfully, Professor Details= " + prof);
+		
 
 	}
 
 	@Override
 	public void deleteProfessor(Professor prof) throws ProfessorNaoEncontradoException {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Professor> profList = (ArrayList<Professor>) session.createQuery("from Pessoa").list();
+		ArrayList<Professor> profList = (ArrayList<Professor>) session.createQuery("from professor").list();
 		for (Pessoa professor : profList) {
 			if (professor.getId() == prof.getId()) {
 				logger.info("Professor successfully deleted" + prof);
+				return;
 
 			}
 		}
@@ -60,7 +61,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 	@Override
 	public ArrayList<Professor> listar() {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Professor> profList = (ArrayList<Professor>) session.createQuery("from Professor").list();
+		ArrayList<Professor> profList = (ArrayList<Professor>) session.createQuery("from professor").list();
 		for (Professor professor : profList) {
 			logger.info("Professor List::" + professor);
 		}

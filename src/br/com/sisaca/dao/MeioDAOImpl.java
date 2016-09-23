@@ -24,21 +24,23 @@ public class MeioDAOImpl implements MeioDAO {
 	
 	
 	@Override
-	public void addMeio(Meio meio) throws CampoNaoPreenchidoException {
+	public void addMeio(Meio meio) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(meio);
-		logger.info("Professor saved succesfully, Pessoa Details= " + meio);
-		throw new  CampoNaoPreenchidoException(meio);
+		logger.info("Meio saved succesfully, Meio Details= " + meio);
+		
 		
 	}
 
 	@Override
 	public void deleteMeio(Meio meio) throws MeioNaoEncontradoException {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Meio> meioList = (ArrayList<Meio>) session.createQuery("from Meio").list();
+		ArrayList<Meio> meioList = (ArrayList<Meio>) session.createQuery("from meio").list();
 		for (Meio me : meioList) {
 			if (meio.getId() == me.getId()) {
-				logger.info("Pessoa successfully deleted" + meio);
+				session.delete(meio);
+				logger.info("Meio successfully deleted" + meio);
+				return;
 
 			}
 		}
@@ -49,10 +51,10 @@ public class MeioDAOImpl implements MeioDAO {
 	@Override
 	public Meio consultarMeio(Meio meio) throws MeioNaoEncontradoException {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Meio > meioList = (ArrayList<Meio >) session.createQuery("from Meio ").list();
+		ArrayList<Meio > meioList = (ArrayList<Meio >) session.createQuery("from meio ").list();
 		for (Meio  me : meioList ) {
 			if (meio.getId() == me.getId()) {
-				logger.info("Pessoa List::" + meio);
+				logger.info("Meio List::" + meio);
 				return me;
 			}
 		}
@@ -62,9 +64,9 @@ public class MeioDAOImpl implements MeioDAO {
 	@Override
 	public ArrayList<Meio> listar() {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Meio> meioList = (ArrayList<Meio>) session.createQuery("from Meio").list();
+		ArrayList<Meio> meioList = (ArrayList<Meio>) session.createQuery("from meio").list();
 		for (Meio meio : meioList) {
-			logger.info("Pessoa List::" + meio);
+			logger.info("Meio List::" + meio);
 		}
 
 		return meioList;

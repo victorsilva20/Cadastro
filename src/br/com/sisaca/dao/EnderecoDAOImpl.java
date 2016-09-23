@@ -21,11 +21,12 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 	}
 
 	@Override
-	public void addEndereco(Endereco end) throws CampoNaoPreenchidoException {
+	public void addEndereco(Endereco end)  {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(end);
-		logger.info("Endereco saved succesfully, Person Details= " + end);
-		throw new CampoNaoPreenchidoException(end); 
+		logger.info("Endereco saved succesfully, Endereco Details= " + end);
+		
+		
 
 	}
 
@@ -35,7 +36,9 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 		ArrayList<Endereco> endList = (ArrayList<Endereco>) session.createQuery("from endereco").list();
 		for (Endereco endereco : endList) {
 			if (endereco.getId() == end.getId()) {
+				session.delete(end);
 				logger.info("Endereco successfully deleted" + end);
+				return;
 
 			}
 		}
@@ -61,9 +64,9 @@ public class EnderecoDAOImpl implements EnderecoDAO {
 	@Override
 	public ArrayList<Endereco> listar() {
 		Session session = this.sessionFactory.getCurrentSession();
-		ArrayList<Endereco> endList = (ArrayList<Endereco>) session.createQuery("from aluno").list();
+		ArrayList<Endereco> endList = (ArrayList<Endereco>) session.createQuery("from endereco").list();
 		for (Endereco endereco : endList) {
-			logger.info("Aluno List::" + endereco);
+			logger.info("Endereco List::" + endereco);
 		}
 
 		return endList;

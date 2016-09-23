@@ -2,13 +2,12 @@ package br.com.sisaca.dao;
 
 import java.util.ArrayList;
 
-import br.com.sisaca.exceptions.CampoNaoPreenchidoException;
 import br.com.sisaca.exceptions.EnderecoNaoEncontradoException;
 import br.com.sisaca.model.Endereco;
 
 public interface EnderecoDAO {
 
-	public void addEndereco(Endereco end) throws CampoNaoPreenchidoException;
+	public void addEndereco(Endereco end);
 
 	public void deleteEndereco(Endereco end) throws EnderecoNaoEncontradoException;
 
