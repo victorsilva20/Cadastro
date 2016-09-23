@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14745615255980" configfile="/Sisaca/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="searchForm" id="pf14745620950051" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14745620950062 pf14745620950063" path="/escolha.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="noFlights" id="pf14745620950064" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14745620950062" path="/noFlights.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="aluno.xhtml" id="pf14745620950065" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14745620950063" path="/aluno.xhtml"/>
+  <links id="pf14745620950062" target="pf14745620950064" source="pf14745620950051" outcome="no flights" redirect="true"/>
+  <links id="pf14745620950063" target="pf14745620950065" source="pf14745620950051" outcome="success" redirect="true"/>
+</pageflow:Pageflow>
